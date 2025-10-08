@@ -74,12 +74,13 @@
       box-shadow:0 4px 10px rgba(0,0,0,0.3)
     }
     #inventory-section .inventory-title{font-size:1.25rem;margin-bottom:18px;color:#2563eb;}
-    .inventory-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+    /* เปลี่ยน inventory-grid เดิมเป็น single page */
+    .inventory-grid{display:none;}
     .inventory-card{background:#f6f8fb;border-radius:16px;padding:18px;box-shadow:0 6px 18px rgba(16,24,40,0.06);display:flex;flex-direction:column;align-items:center;}
     .inventory-preview{
       width:100%;
-      height:320px;
-      border-radius:12px;
+      height:500px; /* ปรับให้สูงขึ้น */
+      border-radius:16px;
       border:2px dashed #bbb;
       display:flex;
       align-items:center;
@@ -102,8 +103,7 @@
       font-size:1rem;
       text-align:left;
     }
-    @media (max-width: 800px){.grid,.inventory-grid{grid-template-columns:1fr;}}
-
+    @media (max-width: 800px){.grid{grid-template-columns:1fr;}}
     /* -------------------- แก้ไขใหม่: ข้อความทุกกรอบรูปเป็นสีดำ -------------------- */
     /* เฉพาะใน card/inventory-card (ไม่รวมปุ่ม) */
     .card,
@@ -246,46 +246,12 @@
   <div id="inventory-section" style="display:none">
     <div class="inventory-header">
       <div class="inventory-title">Inventory — ภาพใหญ่ 3 รายการ</div>
-      <div class="inventory-grid">
-        <div class="inventory-card">
-          <div class="inventory-label">Inventory #1</div>
-          <div class="inventory-preview" id="inv-preview-0">
-            <img src="inventoryblue01.jpg" alt="Inventory #1" />
-          </div>
-          <label class="inventory-file-btn">
-            อัปโหลดภาพ Inventory #1
-            <input type="file" accept="image/*" style="display:none" id="inv-file-0">
-          </label>
-          <div class="inventory-desc">
-            Inventory 1 จะถูกจัดส่งที่ที่ชั้นวางของจุดแรกทางซ้ายสุด
-          </div>
-        </div>
-        <div class="inventory-card">
-          <div class="inventory-label">Inventory #2</div>
-          <div class="inventory-preview" id="inv-preview-1">
-            <img src="inventoryred01.jpg" alt="Inventory #2" />
-          </div>
-          <label class="inventory-file-btn">
-            อัปโหลดภาพ Inventory #2
-            <input type="file" accept="image/*" style="display:none" id="inv-file-1">
-          </label>
-          <div class="inventory-desc">
-            Inventory 2 จะถูกจัดส่งที่จุดตรงกลางระหว่างระหว่างจุดที่วาง inventory1 และ inventory3
-          </div>
-        </div>
-        <div class="inventory-card">
-          <div class="inventory-label">Inventory #3</div>
-          <div class="inventory-preview" id="inv-preview-2">
-            <img src="inventoryyellow01.jpg" alt="Inventory #3" />
-          </div>
-          <label class="inventory-file-btn">
-            อัปโหลดภาพ Inventory #3
-            <input type="file" accept="image/*" style="display:none" id="inv-file-2">
-          </label>
-          <div class="inventory-desc">
-            Inventory 3 จะถูกจัดวางท้ายสุด
-          </div>
-        </div>
+      <div id="inventory-single-page">
+        <!-- ภาพ Inventory จะแสดงตรงนี้ -->
+      </div>
+      <div style="margin-top:20px;display:flex;justify-content:space-between;">
+        <button id="inv-prev" class="inventory-file-btn">ก่อนหน้า</button>
+        <button id="inv-next" class="inventory-file-btn">ถัดไป</button>
       </div>
     </div>
   </div>
@@ -420,20 +386,66 @@
       }
     });
 
-    // Inventory JS (อัปโหลดภาพใหม่ทับของเดิมได้)
-    for(let i=0;i<3;i++){
-      const fileInput = document.getElementById(`inv-file-${i}`);
-      const preview = document.getElementById(`inv-preview-${i}`);
-      fileInput.addEventListener('change', ev => {
+    // Inventory JS: เปลี่ยนเป็นแบบหน้าเดียวทีละ 1 inventory พร้อมปุ่มก่อนหน้า/ถัดไป
+    const inventories = [
+      {
+        label: "Inventory #1",
+        img: "inventoryblue01.jpg",
+        desc: "Inventory 1 จะถูกจัดส่งที่ที่ชั้นวางของจุดแรกทางซ้ายสุด"
+      },
+      {
+        label: "Inventory #2",
+        img: "inventoryred01.jpg",
+        desc: "Inventory 2 จะถูกจัดส่งที่จุดตรงกลางระหว่างระหว่างจุดที่วาง inventory1 และ inventory3"
+      },
+      {
+        label: "Inventory #3",
+        img: "inventoryyellow01.jpg",
+        desc: "Inventory 3 จะถูกจัดวางท้ายสุด"
+      }
+    ];
+    let currentInv = 0;
+    const invSinglePage = document.getElementById('inventory-single-page');
+    function renderInventoryPage(idx) {
+      const inv = inventories[idx];
+      invSinglePage.innerHTML = `
+        <div class="inventory-card">
+          <div class="inventory-label">${inv.label}</div>
+          <div class="inventory-preview" id="inv-preview">
+            <img src="${inv.img}" alt="${inv.label}" />
+          </div>
+          <label class="inventory-file-btn">
+            อัปโหลดภาพ ${inv.label}
+            <input type="file" accept="image/*" style="display:none" id="inv-file">
+          </label>
+          <div class="inventory-desc">${inv.desc}</div>
+        </div>
+      `;
+      // อัปโหลดภาพใหม่
+      document.getElementById('inv-file').addEventListener('change', ev => {
         const file = ev.target.files[0];
         if (!file) return;
         const reader = new FileReader();
         reader.onload = e => {
-          preview.innerHTML = `<img src="${e.target.result}" alt="Inventory #${i+1}" />`;
+          document.getElementById('inv-preview').innerHTML = `<img src="${e.target.result}" alt="${inv.label}" />`;
         };
         reader.readAsDataURL(file);
       });
     }
+    renderInventoryPage(currentInv);
+
+    document.getElementById('inv-prev').addEventListener('click', () => {
+      if (currentInv > 0) {
+        currentInv--;
+        renderInventoryPage(currentInv);
+      }
+    });
+    document.getElementById('inv-next').addEventListener('click', () => {
+      if (currentInv < inventories.length - 1) {
+        currentInv++;
+        renderInventoryPage(currentInv);
+      }
+    });
   </script>
 </body>
 </html>
