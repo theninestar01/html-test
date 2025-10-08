@@ -30,7 +30,6 @@
   </style>
 </head>
 <body>
-<img src="ENGI" alt="รูปnaja">
  <style>
   :root{
     --bg:#f6f8fb;
@@ -144,11 +143,7 @@
     card.innerHTML = `
       <div><strong>${eq}</strong></div>
       <div class="preview" id="eq-preview-${i}">
-        let previewHTML = `<div class="muted">ยังไม่มีรูปอุปกรณ์นี้</div>`;
-if (eq === "Aduno Uno R3 1 ตัว") {
-  previewHTML = `<img src="https://i.imgur.com/xxxxxx.png" alt="${eq}">`;
-}
-
+        <div class="muted">ยังไม่มีรูปอุปกรณ์นี้</div>
       </div>
       <label class="file-btn">อัปโหลดรูปอุปกรณ์
         <input type="file" accept="image/*" style="display:none" id="eq-file-${i}">
@@ -285,5 +280,4 @@ if (eq === "Aduno Uno R3 1 ตัว") {
     document.addEventListener('click',e=>{if(e.target&&e.target.id==='reset-all'){if(confirm('ล้างข้อมูลทั้งหมดในเบราว์เซอร์?')){localStorage.removeItem(STORAGE_KEY);location.reload();}}});
   </script>
 </body>
-
 </html>
