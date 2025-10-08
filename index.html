@@ -103,6 +103,46 @@
       text-align:left;
     }
     @media (max-width: 800px){.grid,.inventory-grid{grid-template-columns:1fr;}}
+
+    /* -------------------- แก้ไขใหม่: ข้อความทุกกรอบรูปเป็นสีดำ -------------------- */
+    /* เฉพาะใน card/inventory-card (ไม่รวมปุ่ม) */
+    .card,
+    .card *:not(button):not([class*="btn"]),
+    .inventory-card,
+    .inventory-card *:not(button):not([class*="btn"]) {
+      color: #111 !important;
+    }
+    /* ข้อความใน preview ทุกชนิดเป็นสีดำ */
+    .preview,
+    .preview * {
+      color: #111 !important;
+    }
+    .inventory-preview,
+    .inventory-preview * {
+      color: #111 !important;
+    }
+    /* ข้อความใน row เป็นสีดำ */
+    .row,
+    .row * {
+      color: #111 !important;
+    }
+    /* ข้อความใน inventory-desc เป็นสีดำ */
+    .inventory-desc {
+      color: #111 !important;
+    }
+    /* input, textarea ในกรอบเป็นดำ */
+    .card input,
+    .card textarea,
+    .inventory-card input,
+    .inventory-card textarea {
+      color: #111 !important;
+    }
+    /* label ในกรอบเป็นดำ */
+    .card label,
+    .inventory-card label {
+      color: #111 !important;
+    }
+    /* -------------------- จบส่วนแก้ไขใหม่ -------------------- */
   </style>
 </head>
 <body>
