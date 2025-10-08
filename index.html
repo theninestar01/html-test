@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>QR Editor — เพิ่ม/แก้ไขรูป QR Code 3 รูป</title>
   <style>
-      .card,
+
+    .card,
     .card input,
     .card button,
     .card .small,
@@ -158,15 +159,7 @@
     card.innerHTML = `
       <div><strong>${eq}</strong></div>
       <div class="preview" id="eq-preview-${i}">
-<<<<<<< HEAD
-        let previewHTML = `<div class="muted">ยังไม่มีรูปอุปกรณ์นี้</div>`;
-if (eq === "Aduno Uno R3 1 ตัว") {
-  previewHTML = `<img src="https://i.imgur.com/xxxxxx.png" alt="${eq}">`;
-}
-
-=======
         <img src="${imgSrc}" alt="${eq}" style="max-width:100%;max-height:100%;" />
->>>>>>> 4c6b2b51519bc517041676ce7e43e0a2fc8c2ca8
       </div>
       <label class="file-btn">อัปโหลดรูปอุปกรณ์
         <input type="file" accept="image/*" style="display:none" id="eq-file-${i}">
