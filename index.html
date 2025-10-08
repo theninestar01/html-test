@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>QR Editor — เพิ่ม/แก้ไขรูป QR Code 3 รูป</title>
   <style>
+      .card,
+    .card input,
+    .card button,
+    .card .small,
+    .card .muted,
+    .card .row,
+    .card label,
+    .card .actions {
+      color: #111 !important;
+}
     :root{--bg:#f6f8fb;--card:#fff;--accent:#2563eb;--muted:#6b7280}
     body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:var(--bg); margin:0;padding:24px;color:#111}
     h1{font-size:1.25rem;margin:0 0 18px}
@@ -30,7 +40,6 @@
   </style>
 </head>
 <body>
-<img src="ENGI" alt="รูปnaja">
  <style>
   :root{
     --bg:#f6f8fb;
@@ -41,7 +50,6 @@
 
   body{
     font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    /* ใส่รูปพื้นหลังไว้จริง ๆ ที่ body (จะอยู่หลังสุดโดยอัตโนมัติ) */
     background: url("screen tech.jpg") no-repeat center center fixed;
     background-size: cover;
     margin:0;
@@ -49,16 +57,14 @@
     color:#fff;
   }
 
-  /* เพิ่ม overlay โปร่งใสเบา ๆ เพื่อให้อ่านตัวอักษรชัด */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.5);
-    z-index: 0;              /* อยู่หลังสุด */
+    z-index: 0;
   }
 
-  /* เนื้อหาทั้งหมดให้อยู่เหนือ overlay */
   body > * {
     position: relative;
     z-index: 1;
@@ -139,16 +145,28 @@
   const eqContainer = document.getElementById('equipments');
 
   equipmentList.forEach((eq, i) => {
+    // กำหนดรูปแต่ละช่อง
+    let imgSrc = "aduno.jpg";
+    if (eq === "Relay 4 ตัว") {
+      imgSrc = "relay.jpg";
+    } else if (eq === "L293D ควบคุมมอเตอร์ไดรฟ์") {
+      imgSrc = "L293Dควบคุมมอเตอร์ไดรฟ์.jpg";
+    }
+
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
       <div><strong>${eq}</strong></div>
       <div class="preview" id="eq-preview-${i}">
+<<<<<<< HEAD
         let previewHTML = `<div class="muted">ยังไม่มีรูปอุปกรณ์นี้</div>`;
 if (eq === "Aduno Uno R3 1 ตัว") {
   previewHTML = `<img src="https://i.imgur.com/xxxxxx.png" alt="${eq}">`;
 }
 
+=======
+        <img src="${imgSrc}" alt="${eq}" style="max-width:100%;max-height:100%;" />
+>>>>>>> 4c6b2b51519bc517041676ce7e43e0a2fc8c2ca8
       </div>
       <label class="file-btn">อัปโหลดรูปอุปกรณ์
         <input type="file" accept="image/*" style="display:none" id="eq-file-${i}">
@@ -203,7 +221,7 @@ if (eq === "Aduno Uno R3 1 ตัว") {
       reader.readAsDataURL(file);
     });
 
-    // QR Section (same as before)
+    // QR Section
     const NUM = 3;
     const STORAGE_KEY = 'qr_editor_cards_v1';
     const container = document.getElementById('cards');
@@ -274,16 +292,42 @@ if (eq === "Aduno Uno R3 1 ตัว") {
         }
       }
       function handleFile(i,file){const reader=new FileReader();reader.onload=function(e){setPreviewImage(i,e.target.result,{type:'image',name:file.name});};reader.readAsDataURL(file);}
-      function setPreviewEmpty(i){preview.innerHTML='<div class="muted">ยังไม่มีรูป — ลากวางหรือกด "อัปโหลด"</div>';updateInfo(i,'');const state=loadState();state[i]=null;saveState(state);}
+      function setPreviewEmpty(i){preview.innerHTML='<div class="muted">ยังไม่มีรูป — ลากวางหรือกด "อัปโหลด"</div>';updateInfo(i,'');}
     }
 
-    function setPreviewImage(i,src,meta={},save=true){const preview=document.getElementById(`preview-${i}`);preview.innerHTML='';const img=document.createElement('img');img.src=src;img.alt=`QR ${i+1}`;preview.appendChild(img);const info=document.getElementById(`info-${i}`);if(meta.type==='generated')info.textContent=`สร้างจากข้อความ: "${meta.text}"`;else if(meta.type==='image')info.textContent=meta.name?meta.name:'รูปภาพอัปโหลด';else info.textContent='';if(save){const state=loadState();state[i]=meta.type==='image'?{type:'image',data:src,name:meta.name||''}:{type:'generated',text:meta.text||'',url:src};saveState(state);}}
+    function setPreviewImage(i,src,meta={},save=true){
+      const preview=document.getElementById(`preview-${i}`);
+      preview.innerHTML='';
+      const img=document.createElement('img');
+      img.src=src;
+      img.alt=`QR ${i+1}`;
+      preview.appendChild(img);
+      if(save){
+        const state=loadState();
+        state[i]={type:meta.type||'image',data:src,text:meta.text||'',name:meta.name||''};
+        saveState(state);
+      }
+    }
     function updateInfo(i,txt){document.getElementById(`info-${i}`).textContent=txt;}
 
-    function downloadPreview(i){const preview=document.getElementById(`preview-${i}`);const img=preview.querySelector('img');if(!img){alert('ไม่มีรูปให้ดาวน์โหลด');return;}const canvas=document.createElement('canvas');const w=img.naturalWidth||400;const h=img.naturalHeight||400;canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');if(!img.complete){img.onload=()=>{ctx.drawImage(img,0,0,w,h);triggerDownload();};}else{ctx.drawImage(img,0,0,w,h);triggerDownload();}function triggerDownload(){try{const dataUrl=canvas.toDataURL('image/png');const a=document.createElement('a');a.href=dataUrl;a.download=`qr-${i+1}.png`;document.body.appendChild(a);a.click();a.remove();}catch(e){window.open(img.src,'_blank');}}}
+    function downloadPreview(i){
+      const preview=document.getElementById(`preview-${i}`);
+      const img=preview.querySelector('img');
+      if(!img){alert('ไม่มีรูปให้ดาวน์โหลด');return;}
+      const link=document.createElement('a');
+      link.href=img.src;
+      link.download=`QR_${i+1}.png`;
+      link.click();
+    }
 
-    document.addEventListener('click',e=>{if(e.target&&e.target.id==='reset-all'){if(confirm('ล้างข้อมูลทั้งหมดในเบราว์เซอร์?')){localStorage.removeItem(STORAGE_KEY);location.reload();}}});
+    document.addEventListener('click',e=>{
+      if(e.target&&e.target.id==='reset-all'){
+        if(confirm('ล้างข้อมูลทั้งหมดในเบราว์เซอร์?')){
+          localStorage.clear();
+          location.reload();
+        }
+      }
+    });
   </script>
 </body>
-
 </html>
