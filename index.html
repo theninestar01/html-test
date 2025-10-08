@@ -144,7 +144,11 @@
     card.innerHTML = `
       <div><strong>${eq}</strong></div>
       <div class="preview" id="eq-preview-${i}">
-        <div class="muted">ยังไม่มีรูปอุปกรณ์นี้</div>
+        let previewHTML = `<div class="muted">ยังไม่มีรูปอุปกรณ์นี้</div>`;
+if (eq === "Aduno Uno R3 1 ตัว") {
+  previewHTML = `<img src="https://i.imgur.com/xxxxxx.png" alt="${eq}">`;
+}
+
       </div>
       <label class="file-btn">อัปโหลดรูปอุปกรณ์
         <input type="file" accept="image/*" style="display:none" id="eq-file-${i}">
