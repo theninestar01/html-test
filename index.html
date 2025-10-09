@@ -8,7 +8,7 @@
     :root{--bg:#f6f8fb;--card:#fff;--accent:#2563eb;--muted:#6b7280}
     body {
       font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: url("images/screen_tech.jpg") no-repeat center center fixed;
+      background: url("screen_tech.jpg") no-repeat center center fixed;
       background-size: cover;
       margin:0;
       padding:24px;
@@ -26,13 +26,33 @@
     .nav-bar{display:flex;gap:16px;margin-bottom:24px;}
     .nav-btn{padding:10px 18px;border-radius:8px;border:none;background:#2563eb;color:#fff;cursor:pointer;font-size:1rem;}
     .nav-btn.active{background:#fff;color:#2563eb;border:2px solid #2563eb;}
+    /* QR Section */
     .project-header {margin-bottom:24px;background:#ffffffcc;border-radius:12px;padding:16px;box-shadow:0 4px 10px rgba(0,0,0,0.3)}
     .project-header input[type=text]{width:100%;font-size:1.2rem;margin-bottom:10px;border:1px solid #ddd;border-radius:8px;padding:8px}
     .project-image{width:100%;height:300px;border:2px dashed #ccc;border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fafafa}
     .project-image img{max-width:100%;max-height:100%;object-fit:contain}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .card{background:#ffffffdd;border-radius:12px;padding:14px;box-shadow:0 6px 18px rgba(16,24,40,0.3);min-height:300px;display:flex;flex-direction:column;gap:10px;}
-    .preview{height:200px;border-radius:8px;border:1px dashed #ddd;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fafafa;color:#111 !important;}
+    .card{
+      background:#ffffffdd;
+      border-radius:12px;
+      padding:14px;
+      box-shadow:0 6px 18px rgba(16,24,40,0.3);
+      min-height:300px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .preview{
+      height:200px;
+      border-radius:8px;
+      border:1px dashed #ddd;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      background:#fafafa;
+      color:#111 !important; /* ตัวอักษรสีดำ */
+    }
     .preview img{max-width:100%;max-height:100%;display:block}
     .controls{display:flex;gap:8px;flex-wrap:wrap}
     input[type=text]{flex:1;padding:8px;border-radius:8px;border:1px solid #e5e7eb}
@@ -45,183 +65,401 @@
     .actions{margin-top:auto;display:flex;justify-content:space-between;align-items:center}
     .drop-active{border-color:var(--accent);background:#f0f9ff}
     footer{margin-top:18px;color:#e2e8f0;font-size:0.9rem}
-    #inventory-section .inventory-header {margin-bottom:24px;background:#ffffffcc;border-radius:12px;padding:16px;box-shadow:0 4px 10px rgba(0,0,0,0.3)}
+    /* Inventory Section */
+    #inventory-section .inventory-header {
+      margin-bottom:24px;
+      background:#ffffffcc;
+      border-radius:12px;
+      padding:16px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.3)
+    }
     #inventory-section .inventory-title{font-size:1.25rem;margin-bottom:18px;color:#2563eb;}
+    /* เปลี่ยน inventory-grid เดิมเป็น single page */
     .inventory-grid{display:none;}
     .inventory-card{background:#f6f8fb;border-radius:16px;padding:18px;box-shadow:0 6px 18px rgba(16,24,40,0.06);display:flex;flex-direction:column;align-items:center;}
-    .inventory-preview{width:100%;height:500px;border-radius:16px;border:2px dashed #bbb;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fafafa;color:#111 !important;}
+    .inventory-preview{
+      width:100%;
+      height:500px; /* ปรับให้สูงขึ้น */
+      border-radius:16px;
+      border:2px dashed #bbb;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      background:#fafafa;
+      color:#111 !important; /* ตัวอักษรสีดำ */
+    }
     .inventory-preview img{max-width:100%;max-height:100%;object-fit:contain;}
     .inventory-label{font-weight:bold;margin-bottom:8px;color:#111;}
     .inventory-file-btn{padding:10px 14px;border-radius:8px;border:1px dashed #2563eb;background:transparent;cursor:pointer;color:#2563eb;}
-    .inventory-desc{width:100%;margin-top:12px;background:#fff;color:#111;border-radius:8px;padding:12px;box-shadow:0 2px 6px rgba(0,0,0,0.05);font-size:1rem;text-align:left;}
+    .inventory-desc{
+      width:100%;
+      margin-top:12px;
+      background:#fff;
+      color:#111;
+      border-radius:8px;
+      padding:12px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.05);
+      font-size:1rem;
+      text-align:left;
+    }
     @media (max-width: 800px){.grid{grid-template-columns:1fr;}}
-    .card, .card *:not(button):not([class*="btn"]), .inventory-card, .inventory-card *:not(button):not([class*="btn"]) {color: #111 !important;}
-    .preview, .preview *, .inventory-preview, .inventory-preview *, .row, .row *, .inventory-desc {color: #111 !important;}
-    .card input,.card textarea,.inventory-card input,.inventory-card textarea{color:#111 !important;}
-    .card label,.inventory-card label{color:#111 !important;}
+    /* -------------------- แก้ไขใหม่: ข้อความทุกกรอบรูปเป็นสีดำ -------------------- */
+    /* เฉพาะใน card/inventory-card (ไม่รวมปุ่ม) */
+    .card,
+    .card *:not(button):not([class*="btn"]),
+    .inventory-card,
+    .inventory-card *:not(button):not([class*="btn"]) {
+      color: #111 !important;
+    }
+    /* ข้อความใน preview ทุกชนิดเป็นสีดำ */
+    .preview,
+    .preview * {
+      color: #111 !important;
+    }
+    .inventory-preview,
+    .inventory-preview * {
+      color: #111 !important;
+    }
+    /* ข้อความใน row เป็นสีดำ */
+    .row,
+    .row * {
+      color: #111 !important;
+    }
+    /* ข้อความใน inventory-desc เป็นสีดำ */
+    .inventory-desc {
+      color: #111 !important;
+    }
+    /* input, textarea ในกรอบเป็นดำ */
+    .card input,
+    .card textarea,
+    .inventory-card input,
+    .inventory-card textarea {
+      color: #111 !important;
+    }
+    /* label ในกรอบเป็นดำ */
+    .card label,
+    .inventory-card label {
+      color: #111 !important;
+    }
+    /* -------------------- จบส่วนแก้ไขใหม่ -------------------- */
   </style>
 </head>
 <body>
 
-<button type="button" onclick="location.href='inv001.html'">ไปหน้า index.html</button>
+<button type="button" onclick="location.href='inv001.html'">
+  ไปหน้า index.html
+</button>
 
-<div class="nav-bar">
-  <button class="nav-btn active" id="btn-qr">QR Editor</button>
-  <button class="nav-btn" id="btn-inv">Inventory</button>
-</div>
 
-<!-- QR Editor Section -->
-<div id="qr-section">
-  <div class="project-header">
-    <div class="project-title">Forklift with Arduino Uno</div>
-    <div class="project-image" id="projectImage"></div>
-    <label class="file-btn" style="margin-top:8px;display:inline-block;">
-      อัปโหลดรูปโปรเจ็กต์หลัก
-      <input type="file" accept="image/*" id="projectImageInput" />
-    </label>
+  <!-- Navigation Bar -->
+  <div class="nav-bar">
+    <button class="nav-btn active" id="btn-qr">QR Editor</button>
+    <button class="nav-btn" id="btn-inv">Inventory</button>
   </div>
 
-  <h1>สมาชิกกลุ่ม</h1>
-  <p class="muted">
-    ชยพัศ บำรุงพรไพศาล 6610110448<br>
-    อามีร มะยิ 6610110711<br>
-    วรากร ปิยวิสุทธิรักษ์ 6610110634<br>
-    พีรพัฒน์ ภักดีอักษร 6610110216<br>
-    วุฒิพงศ์ สนอยู่ 6610110642<br>
-    รวิกร สุวรรณบัณฑิต 6610110258<br>
-    นายจารุเดช เพชรวิโรจน์ 6610110039<br>
-    นายศิวกร นุ่นทอง 6610110649
-  </p>
+  <!-- QR Editor Section -->
+  <div id="qr-section">
+    <div class="project-header">
+      <div class="project-title">Forklift with Arduino Uno</div>
+      <div class="project-image" id="projectImage">
+        <span class="muted">ยังไม่มีรูปโปรเจ็กต์ — อัปโหลดได้ด้านล่าง</span>
+      </div>
+      <label class="file-btn" style="margin-top:8px;display:inline-block;">
+        อัปโหลดรูปโปรเจ็กต์หลัก
+        <input type="file" accept="image/*" id="projectImageInput" />
+      </label>
+    </div>
+    <h1>สมาชิกกลุ่ม</h1>
+    <p class="muted">
+      ชยพัศ บำรุงพรไพศาล 6610110448<br>
+      อามีร มะยิ 6610110711<br>
+      วรากร ปิยวิสุทธิรักษ์ 6610110634<br>
+      พีรพัฒน์ ภักดีอักษร 6610110216<br>
+      วุฒิพงศ์ สนอยู่ 6610110642<br>
+      รวิกร สุวรรณบัณฑิต 6610110258<br>
+      นายจารุเดช เพชรวิโรจน์ 6610110039<br>
+      นายศิวกร นุ่นทอง 6610110649</p>
+    <div class="grid" id="cards"></div>
+    <footer>
+      <h2>อัปโหลดรูปอุปกรณ์</h2>
+      <div class="grid" id="equipments"></div>
+      <script>
+        const equipmentList = [
+          "Aduno Uno R3 1 ตัว",
+          "Motor DC 12v 4 ตัว",
+          "ชั้นวางของ Plastic 3D printer",
+          "Relay 4 ตัว",
+          "สายพานเพื่อให้ตัวคีบเคลื่อนที่",
+          "หัวคีบ 3D printer",
+          "L293D ควบคุมมอเตอร์ไดรฟ์",
+          "รางถ่านและถ่าน 1.5v"
+        ];
+        const eqContainer = document.getElementById('equipments');
+        equipmentList.forEach((eq, i) => {
+          let imgSrc = "aduno.jpg";
+          if (eq === "Relay 4 ตัว") {
+            imgSrc = "relay.jpg";
+          } else if (eq === "L293D ควบคุมมอเตอร์ไดรฟ์") {
+            imgSrc = "L293Dควบคุมมอเตอร์ไดรฟ์.jpg";
+          } else if (eq === "Motor DC 12v 4 ตัว") {
+            imgSrc = "DCmotor12v.jpg";
+          } else if (eq === "ชั้นวางของ Plastic 3D printer") {
+            imgSrc = "rack.jpg";
+          } else if (eq === "รางถ่านและถ่าน 1.5v") {
+            imgSrc = "batterry.jpg";
+          } else if (eq === "หัวคีบ 3D printer") {
+            imgSrc = "forklifthead.jpg";
+          } else if (eq === "สายพานเพื่อให้ตัวคีบเคลื่อนที่") {
+            imgSrc = "สายพาน.jpg";
+          }
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <div><strong>${eq}</strong></div>
+            <div class="preview" id="eq-preview-${i}">
+              <img src="${imgSrc}" alt="${eq}" style="max-width:100%;max-height:100%;" />
+            </div>
+            <label class="file-btn">อัปโหลดรูปอุปกรณ์
+              <input type="file" accept="image/*" style="display:none" id="eq-file-${i}">
+            </label>
+          `;
+          eqContainer.appendChild(card);
+          const fileInput = card.querySelector(`#eq-file-${i}`);
+          const preview = card.querySelector(`#eq-preview-${i}`);
+          fileInput.addEventListener('change', ev => {
+            const file = ev.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+              preview.innerHTML = `<img src="${e.target.result}" alt="${eq}">`;
+            };
+            reader.readAsDataURL(file);
+          });
+        });
+      </script>
+      <div>วัตถุประสงค์ : <br>
+        ใช้พื้นที่ให้เกิดประโยชน์สูงสุด <br>
+        เพิ่มประสิทธิภาพการขนย้ายในพื้นที่จำกัด <br>
+        ลดความเสี่ยงในการชนหรือเกิดอุบัติเหตุในพื้นที่แคบ<br>
+        <br><br>
+        อุปกรณ์ที่ใช้<br>
+        ▪Aduno Uno R3 1 ตัว <br>
+        ▪Motor DC 12v 4 ตัว <br>
+        ▪ชั้นวางของPlastic 3D printer <br>
+        ▪Relay 4 ตัว <br>
+        ▪สายพานเพื่อให้ตัวคีบเคลื่อนที่ <br>
+        ▪หัวคีบ3D printer <br>
+        ▪L293Dควบคุมมอเตอร์ไดรฟ์ <br>
+        ▪รางถ่านและถ่าน1.5v <br>
+      </div>
+    </footer>
+  </div>
 
-  <div class="grid" id="cards"></div>
-
-  <footer>
-    <h2>อัปโหลดรูปอุปกรณ์</h2>
-    <div class="grid" id="equipments"></div>
-  </footer>
-</div>
-
-<!-- Inventory Section -->
-<div id="inventory-section" style="display:none">
-  <div class="inventory-header">
-    <div class="inventory-title">Inventory — ภาพใหญ่ 3 รายการ</div>
-    <div id="inventory-single-page"></div>
-    <div style="margin-top:20px;display:flex;justify-content:space-between;">
-      <button id="inv-prev" class="inventory-file-btn">ก่อนหน้า</button>
-      <button id="inv-next" class="inventory-file-btn">ถัดไป</button>
+  <!-- Inventory Section -->
+  <div id="inventory-section" style="display:none">
+    <div class="inventory-header">
+      <div class="inventory-title">Inventory — ภาพใหญ่ 3 รายการ</div>
+      <div id="inventory-single-page">
+        <!-- ภาพ Inventory จะแสดงตรงนี้ -->
+      </div>
+      <div style="margin-top:20px;display:flex;justify-content:space-between;">
+        <button id="inv-prev" class="inventory-file-btn">ก่อนหน้า</button>
+        <button id="inv-next" class="inventory-file-btn">ถัดไป</button>
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-  const baseURL = "https://<USERNAME>.github.io/<REPO>/images/";
+  <script>
+    // Navigation
+    const btnQR = document.getElementById('btn-qr');
+    const btnInv = document.getElementById('btn-inv');
+    const qrSection = document.getElementById('qr-section');
+    const invSection = document.getElementById('inventory-section');
+    btnQR.addEventListener('click', () => {
+      qrSection.style.display = '';
+      invSection.style.display = 'none';
+      btnQR.classList.add('active');
+      btnInv.classList.remove('active');
+    });
+    btnInv.addEventListener('click', () => {
+      qrSection.style.display = 'none';
+      invSection.style.display = '';
+      btnQR.classList.remove('active');
+      btnInv.classList.add('active');
+    });
 
-  // แสดงภาพโปรเจ็กต์หลักเริ่มต้น
-  const projectImageDiv = document.getElementById('projectImage');
-  projectImageDiv.innerHTML = `<img src="${baseURL}project_pic.jpg" alt="Project Image">`;
-  document.getElementById('projectImageInput').addEventListener('change', e => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => projectImageDiv.innerHTML = `<img src="${ev.target.result}" alt="project image">`;
-    reader.readAsDataURL(file);
-  });
-
-  // อุปกรณ์
-  const equipmentList = [
-    "Aduno Uno R3 1 ตัว",
-    "Motor DC 12v 4 ตัว",
-    "ชั้นวางของ Plastic 3D printer",
-    "Relay 4 ตัว",
-    "สายพานเพื่อให้ตัวคีบเคลื่อนที่",
-    "หัวคีบ 3D printer",
-    "L293D ควบคุมมอเตอร์ไดรฟ์",
-    "รางถ่านและถ่าน 1.5v"
-  ];
-  const eqContainer = document.getElementById('equipments');
-  equipmentList.forEach((eq, i) => {
-    let imgSrc = `${baseURL}aduno.jpg`;
-    if (eq === "Relay 4 ตัว") imgSrc = `${baseURL}relay.jpg`;
-    else if (eq === "L293D ควบคุมมอเตอร์ไดรฟ์") imgSrc = `${baseURL}L293Dควบคุมมอเตอร์ไดรฟ์.jpg`;
-    else if (eq === "Motor DC 12v 4 ตัว") imgSrc = `${baseURL}DCmotor12v.jpg`;
-    else if (eq === "ชั้นวางของ Plastic 3D printer") imgSrc = `${baseURL}rack.jpg`;
-    else if (eq === "รางถ่านและถ่าน 1.5v") imgSrc = `${baseURL}battery.jpg`;
-    else if (eq === "หัวคีบ 3D printer") imgSrc = `${baseURL}forklifthead.jpg`;
-    else if (eq === "สายพานเพื่อให้ตัวคีบเคลื่อนที่") imgSrc = `${baseURL}สายพาน.jpg`;
-
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <div><strong>${eq}</strong></div>
-      <div class="preview" id="eq-preview-${i}">
-        <img src="${imgSrc}" alt="${eq}" />
-      </div>
-      <label class="file-btn">อัปโหลดรูปอุปกรณ์
-        <input type="file" accept="image/*" style="display:none" id="eq-file-${i}">
-      </label>
-    `;
-    eqContainer.appendChild(card);
-
-    const fileInput = card.querySelector(`#eq-file-${i}`);
-    const preview = card.querySelector(`#eq-preview-${i}`);
-    fileInput.addEventListener('change', ev => {
-      const file = ev.target.files[0];
+    // QR Editor JavaScript (ของเดิม)
+    const projectInput = document.getElementById('projectImageInput');
+    const projectImageDiv = document.getElementById('projectImage');
+    projectInput.addEventListener('change', e => {
+      const file = e.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = e => preview.innerHTML = `<img src="${e.target.result}" alt="${eq}">`;
+      reader.onload = ev => {
+        projectImageDiv.innerHTML = `<img src="${ev.target.result}" alt="project image">`;
+      };
       reader.readAsDataURL(file);
     });
-  });
-
-  // Inventory Section
-  const inventories = [
-    { label: "Inventory #1", img: `${baseURL}inventoryblue01.jpg`, desc: "Inventory 1 จะถูกจัดส่งที่จุดแรก" },
-    { label: "Inventory #2", img: `${baseURL}inventoryred01.jpg`, desc: "Inventory 2 จะถูกจัดส่งตรงกลาง" },
-    { label: "Inventory #3", img: `${baseURL}inventoryyellow01.jpg`, desc: "Inventory 3 จะถูกจัดวางท้ายสุด" }
-  ];
-  let currentInv = 0;
-  const invSinglePage = document.getElementById('inventory-single-page');
-  function renderInventoryPage(idx) {
-    const inv = inventories[idx];
-    invSinglePage.innerHTML = `
-      <div class="inventory-card">
-        <div class="inventory-label">${inv.label}</div>
-        <div class="inventory-preview" id="inv-preview"><img src="${inv.img}" alt="${inv.label}" /></div>
-        <label class="inventory-file-btn">
-          อัปโหลดภาพ ${inv.label}
-          <input type="file" accept="image/*" style="display:none" id="inv-file">
-        </label>
-        <div class="inventory-desc">${inv.desc}</div>
-      </div>`;
-    document.getElementById('inv-file').addEventListener('change', ev => {
-      const file = ev.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = e => document.getElementById('inv-preview').innerHTML = `<img src="${e.target.result}" alt="${inv.label}" />`;
-      reader.readAsDataURL(file);
+    const NUM = 3;
+    const STORAGE_KEY = 'qr_editor_cards_v1';
+    const container = document.getElementById('cards');
+    for (let i=0;i<NUM;i++){
+      const card = document.createElement('div'); card.className='card';
+      card.innerHTML = `
+        <div class="small">QR #${i+1}</div>
+        <div class="preview" id="preview-${i}">
+          <div class="muted">ยังไม่มีรูป — ลากวางหรือกด "อัปโหลด"</div>
+        </div>
+        <div class="row controls">
+          <label class="file-btn">อัปโหลด<input type="file" accept="image/*" style="display:none" id="file-${i}"/></label>
+          <input type="text" placeholder="พิมพ์ข้อความเพื่อสร้าง QR (เช่น URL)" id="text-${i}" />
+          <button id="gen-${i}">สร้าง</button>
+        </div>
+        <div class="row small muted"><div id="info-${i}"></div></div>
+        <div class="actions">
+          <div style="display:flex;gap:8px">
+            <button class="btn-ghost" id="clear-${i}">ลบ</button>
+            <button class="btn-ghost" id="reset-all">ล้างทั้งหมด</button>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button id="download-${i}" class="btn-ghost">ดาวน์โหลด</button>
+            <button id="edit-${i}" class="btn-ghost">เปลี่ยน</button>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+      setupCard(i);
+    }
+    function loadState(){try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return[];return JSON.parse(raw);}catch(e){return[]}}
+    function saveState(state){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+    function setupCard(i){
+      const fileInput=document.getElementById(`file-${i}`);
+      const textInput=document.getElementById(`text-${i}`);
+      const genBtn=document.getElementById(`gen-${i}`);
+      const preview=document.getElementById(`preview-${i}`);
+      const info=document.getElementById(`info-${i}`);
+      const clearBtn=document.getElementById(`clear-${i}`);
+      const downloadBtn=document.getElementById(`download-${i}`);
+      const editBtn=document.getElementById(`edit-${i}`);
+      preview.addEventListener('dragover',ev=>{ev.preventDefault();preview.classList.add('drop-active')});
+      preview.addEventListener('dragleave',ev=>{preview.classList.remove('drop-active')});
+      preview.addEventListener('drop',ev=>{ev.preventDefault();preview.classList.remove('drop-active');const f=ev.dataTransfer.files[0];if(f)handleFile(i,f)});
+      fileInput.addEventListener('change',ev=>{const f=ev.target.files[0];if(f)handleFile(i,f)});
+      genBtn.addEventListener('click',()=>{
+        const txt=textInput.value.trim();
+        if(!txt){alert('กรุณาพิมพ์ข้อความที่จะสร้าง QR');return;}
+        const url=`https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(txt)}`;
+        setPreviewImage(i,url,{type:'generated',text:txt});
+      });
+      clearBtn.addEventListener('click',()=>{if(confirm('ต้องการลบรูปนี้ใช่หรือไม่?')){setPreviewEmpty(i);}});
+      downloadBtn.addEventListener('click',()=>{downloadPreview(i);});
+      editBtn.addEventListener('click',()=>{fileInput.click();});
+      const state=loadState();
+      if(state[i]){
+        if(state[i].type==='image'){
+          setPreviewImage(i,state[i].data,{type:'image'},false);
+        }else if(state[i].type==='generated'){
+          const url=`https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(state[i].text)}`;
+          setPreviewImage(i,url,{type:'generated',text:state[i].text},false);
+          textInput.value=state[i].text||'';
+        }
+      }
+      function handleFile(i,file){const reader=new FileReader();reader.onload=function(e){setPreviewImage(i,e.target.result,{type:'image',name:file.name});};reader.readAsDataURL(file);}
+      function setPreviewEmpty(i){preview.innerHTML='<div class="muted">ยังไม่มีรูป — ลากวางหรือกด "อัปโหลด"</div>';updateInfo(i,'');}
+    }
+    function setPreviewImage(i,src,meta={},save=true){
+      const preview=document.getElementById(`preview-${i}`);
+      preview.innerHTML='';
+      const img=document.createElement('img');
+      img.src=src;
+      img.alt=`QR ${i+1}`;
+      preview.appendChild(img);
+      if(save){
+        const state=loadState();
+        state[i]={type:meta.type||'image',data:src,text:meta.text||'',name:meta.name||''};
+        saveState(state);
+      }
+    }
+    function updateInfo(i,txt){document.getElementById(`info-${i}`).textContent=txt;}
+    function downloadPreview(i){
+      const preview=document.getElementById(`preview-${i}`);
+      const img=preview.querySelector('img');
+      if(!img){alert('ไม่มีรูปให้ดาวน์โหลด');return;}
+      const link=document.createElement('a');
+      link.href=img.src;
+      link.download=`QR_${i+1}.png`;
+      link.click();
+    }
+    document.addEventListener('click',e=>{
+      if(e.target&&e.target.id==='reset-all'){
+        if(confirm('ล้างข้อมูลทั้งหมดในเบราว์เซอร์?')){
+          localStorage.clear();
+          location.reload();
+        }
+      }
     });
-  }
-  renderInventoryPage(currentInv);
-  document.getElementById('inv-prev').addEventListener('click', () => { if (currentInv > 0) { currentInv--; renderInventoryPage(currentInv); } });
-  document.getElementById('inv-next').addEventListener('click', () => { if (currentInv < inventories.length - 1) { currentInv++; renderInventoryPage(currentInv); } });
 
-  // Nav
-  const btnQR = document.getElementById('btn-qr');
-  const btnInv = document.getElementById('btn-inv');
-  const qrSection = document.getElementById('qr-section');
-  const invSection = document.getElementById('inventory-section');
-  btnQR.addEventListener('click', () => {
-    qrSection.style.display = '';
-    invSection.style.display = 'none';
-    btnQR.classList.add('active');
-    btnInv.classList.remove('active');
-  });
-  btnInv.addEventListener('click', () => {
-    qrSection.style.display = 'none';
-    invSection.style.display = '';
-    btnQR.classList.remove('active');
-    btnInv.classList.add('active');
-  });
-</script>
+    // Inventory JS: เปลี่ยนเป็นแบบหน้าเดียวทีละ 1 inventory พร้อมปุ่มก่อนหน้า/ถัดไป
+    const inventories = [
+      {
+        label: "Inventory #1",
+        img: "inventoryblue01.jpg",
+        desc: "Inventory 1 จะถูกจัดส่งที่ที่ชั้นวางของจุดแรกทางซ้ายสุด"
+      },
+      {
+        label: "Inventory #2",
+        img: "inventoryred01.jpg",
+        desc: "Inventory 2 จะถูกจัดส่งที่จุดตรงกลางระหว่างระหว่างจุดที่วาง inventory1 และ inventory3"
+      },
+      {
+        label: "Inventory #3",
+        img: "inventoryyellow01.jpg",
+        desc: "Inventory 3 จะถูกจัดวางท้ายสุด"
+      }
+    ];
+    let currentInv = 0;
+    const invSinglePage = document.getElementById('inventory-single-page');
+    function renderInventoryPage(idx) {
+      const inv = inventories[idx];
+      invSinglePage.innerHTML = `
+        <div class="inventory-card">
+          <div class="inventory-label">${inv.label}</div>
+          <div class="inventory-preview" id="inv-preview">
+            <img src="${inv.img}" alt="${inv.label}" />
+          </div>
+          <label class="inventory-file-btn">
+            อัปโหลดภาพ ${inv.label}
+            <input type="file" accept="image/*" style="display:none" id="inv-file">
+          </label>
+          <div class="inventory-desc">${inv.desc}</div>
+        </div>
+      `;
+      // อัปโหลดภาพใหม่
+      document.getElementById('inv-file').addEventListener('change', ev => {
+        const file = ev.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+          document.getElementById('inv-preview').innerHTML = `<img src="${e.target.result}" alt="${inv.label}" />`;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+    renderInventoryPage(currentInv);
+
+    document.getElementById('inv-prev').addEventListener('click', () => {
+      if (currentInv > 0) {
+        currentInv--;
+        renderInventoryPage(currentInv);
+      }
+    });
+    document.getElementById('inv-next').addEventListener('click', () => {
+      if (currentInv < inventories.length - 1) {
+        currentInv++;
+        renderInventoryPage(currentInv);
+      }
+    });
+  </script>
 </body>
 </html>
