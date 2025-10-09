@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Inventory #1</title>
+  <style>
+    body {
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: url("screen_tech.jpg") no-repeat center center fixed;
+      background-size: cover;
+      margin:0;
+      padding:24px;
+      color:#fff;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 0;
+    }
+    body > * { position: relative; z-index: 1; }
+    .inventory-card{
+      background:#f6f8fb;
+      border-radius:24px;
+      padding:28px;
+      box-shadow:0 6px 18px rgba(16,24,40,0.06);
+      max-width:700px;
+      margin:40px auto;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+    .inventory-label{
+      font-weight:bold;
+      margin-bottom:16px;
+      color:#111;
+      font-size:2.2rem;
+      letter-spacing:1px;
+    }
+    .inventory-preview{
+      width:100%;
+      height:550px;
+      border-radius:24px;
+      border:3px dashed #2563eb;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      background:#fafafa;
+      color:#111 !important;
+      margin-bottom:18px;
+    }
+    .inventory-preview img{
+      max-width:100%;
+      max-height:100%;
+      object-fit:contain;
+      border-radius:12px;
+    }
+    .inventory-file-btn{
+      font-size:1.35rem;
+      padding:14px 18px;
+      border-radius:12px;
+      border:2px dashed #2563eb;
+      background:transparent;
+      cursor:pointer;
+      color:#2563eb;
+      margin-bottom:18px;
+    }
+    .inventory-desc{
+      width:100%;
+      min-height:80px;
+      background:#fff;
+      color:#111;
+      border-radius:12px;
+      padding:18px 20px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.05);
+      font-size:1.5rem;
+      text-align:left;
+      line-height:1.6;
+      margin-top:10px;
+      letter-spacing:0.5px;
+    }
+    /* ให้ข้อความในกรอบเป็นสีดำ */
+    .inventory-card,
+    .inventory-card *:not(button):not([class*="btn"]) {
+      color: #111 !important;
+    }
+    @media (max-width: 800px){
+      .inventory-card{
+        max-width:98vw;
+        padding:10vw 2vw;
+      }
+      .inventory-preview{
+        height:350px;
+      }
+      .inventory-label{
+        font-size:1.4rem;
+      }
+      .inventory-desc{
+        font-size:1.08rem;
+        padding:12px;
+      }
+      .inventory-file-btn{
+        font-size:1rem;
+        padding:10px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="inventory-card">
+    <div class="inventory-label">Inventory #1</div>
+    <div class="inventory-preview" id="inv-preview">
+      <img src="inventoryblue01.jpg" alt="Inventory #1" />
+    </div>
+    <label class="inventory-file-btn">
+      อัปโหลดภาพ Inventory #1
+      <input type="file" accept="image/*" style="display:none" id="inv-file">
+    </label>
+    <div class="inventory-desc">
+      Inventory 1 จะถูกจัดส่งที่ที่ชั้นวางของจุดแรกทางซ้ายสุด
+    </div>
+  </div>
+  <script>
+    document.getElementById('inv-file').addEventListener('change', function(ev){
+      const file = ev.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e){
+        document.getElementById('inv-preview').innerHTML = `<img src="${e.target.result}" alt="Inventory #1" />`;
+      };
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
